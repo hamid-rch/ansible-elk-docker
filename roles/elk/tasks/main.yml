@@ -1,0 +1,5 @@
+# ===== Main ELK tasks =====
+- import_tasks: elasticsearch.yml
+- import_tasks: kibana.yml
+- import_tasks: logstash.yml
+- import_tasks: containers.yml

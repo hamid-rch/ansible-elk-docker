@@ -1,0 +1,59 @@
+# ===== Elasticsearch setup =====
+- name: Ensure compose directory exists
+  ansible.builtin.file:
+    path: "{{ elk_compose_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Copy docker-compose.yml
+  ansible.builtin.copy:
+    src: docker-compose.yml
+    dest: "{{ compose_file }}"
+    mode: '0644'
+
+- name: Start Elasticsearch container
+  ansible.builtin.command: docker compose up -d elasticsearch
+  args:
+    chdir: "{{ elk_compose_dir }}"
+
+- name: Wait for Elasticsearch HTTP to respond 200 or 401
+  ansible.builtin.uri:
+    url: "http://localhost:9200"
+    method: GET
+    status_code: [200, 401]
+  register: es_status
+  retries: 30
+  delay: 5
+  until: es_status.status in [200, 401]
+
+- name: Generate dynamic token name
+  set_fact:
+    token_name: "kibana-token-{{ ansible_date_time.iso8601_basic_short }}"
+
+- name: Create service token inside Elasticsearch container
+  ansible.builtin.command: >
+    docker exec {{ es_container_name }}
+    elasticsearch-service-tokens create elastic/kibana {{ token_name }}
+  register: token_output
+  failed_when: token_output.rc != 0
+
+- name: Show raw output of token creation
+  debug:
+    var: token_output.stdout_lines
+
+- name: Extract kibana token value
+  set_fact:
+    kibana_token: "{{ token_output.stdout_lines
+                      | select('search','=') 
+                      | map('regex_replace','^.*=\\s*(.+)','\\1')
+                      | list
+                      | first }}"
+
+- name: Show extracted Kibana token
+  debug:
+    msg: "Kibana token = {{ kibana_token }}"
+
+- name: Fail if token not found
+  ansible.builtin.fail:
+    msg: "Failed to extract kibana service token."
+  when: kibana_token is not defined or kibana_token == ''

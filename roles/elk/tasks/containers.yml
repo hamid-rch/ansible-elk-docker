@@ -1,0 +1,15 @@
+# ===== Start remaining containers =====
+- name: Start Kibana, Logstash and Elastic Agent
+  ansible.builtin.command: docker compose up -d kibana logstash elastic-agent
+  args:
+    chdir: "{{ elk_compose_dir }}"
+
+- name: Wait for Kibana to respond 200 or 401
+  ansible.builtin.uri:
+     url: "http://localhost:5601"
+     method: GET
+     status_code: [200,401]
+  register: kibana_status
+  retries: 30
+  delay: 5
+  until: kibana_status.status in [200,401]

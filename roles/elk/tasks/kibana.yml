@@ -1,0 +1,13 @@
+# ===== Kibana setup =====
+- name: Ensure kibana config dir exists
+  ansible.builtin.file:
+    path: "{{ elk_compose_dir }}/kibana/config"
+    state: directory
+    mode: '0755'
+    recurse: yes
+
+- name: Render kibana.yml from template
+  ansible.builtin.template:
+    src: kibana.yml.j2
+    dest: "{{ kibana_config_local_path }}"
+    mode: '0644'

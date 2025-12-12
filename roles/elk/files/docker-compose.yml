@@ -1,0 +1,62 @@
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:9.2.2
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=true
+      - ELASTIC_PASSWORD=changeme
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g
+    ports:
+      - "9200:9200"
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    networks:
+      - elk
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:9.2.2
+    container_name: logstash
+    depends_on:
+      - elasticsearch
+    environment:
+      - LS_JAVA_OPTS=-Xms512m -Xmx512m
+    ports:
+      - "5044:5044"
+      - "9600:9600"
+    volumes:
+      - ./logstash/pipeline:/usr/share/logstash/pipeline
+    networks:
+      - elk
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:9.2.2
+    container_name: kibana
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - "5601:5601"
+    volumes:
+      - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml
+    depends_on:
+      - elasticsearch
+    networks:
+      - elk
+
+  elastic-agent:
+    image: docker.elastic.co/beats/elastic-agent:8.16.0
+    container_name: elastic-agent
+    depends_on:
+      - elasticsearch
+      - kibana
+    environment:
+      - FLEET_ENROLLMENT_TOKEN=YOUR_TOKEN
+      - FLEET_URL=http://kibana:5601
+    networks:
+      - elk
+
+volumes:
+  esdata:
+
+networks:
+  elk:

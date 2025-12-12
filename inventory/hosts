@@ -1,0 +1,21 @@
+[small]
+ubuntu2404B
+#ansible_host=1.2.3.4
+
+[large]
+ubuntu2404C
+#ansible_host=1.2.3.4
+#ubuntu2404[B:C]
+
+[end]
+ubuntu2404D
+
+[vms:children]
+small
+large
+end
+
+[vms:vars]
+ansible_user=vagrant
+ansible_ssh_private_key_file=/home/vagrant/.ssh/id_ed25519
+ansible_ssh_common_args=-o StrictHostKeyChecking=no -i /home/vagrant/.ssh/id_ed25519

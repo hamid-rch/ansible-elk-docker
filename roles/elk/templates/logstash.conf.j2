@@ -1,0 +1,14 @@
+input {
+  beats {
+    port => {{ beats_port | default(5044) }}
+  }
+}
+
+output {
+  stdout { codec => rubydebug }
+  elasticsearch {
+    hosts => ["{{ es_host | default('http://elasticsearch:9200') }}"]
+    user => "{{ es_user | default('elastic') }}"
+    password => "{{ es_password | default('changeme') }}"
+  }
+}

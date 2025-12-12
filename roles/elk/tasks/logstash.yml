@@ -1,0 +1,17 @@
+# ===== Logstash setup =====
+- name: Ensure Logstash pipeline directory exists
+  file:
+    path: "{{ elk_compose_dir }}/logstash/pipeline"
+    state: directory
+    mode: '0755'
+
+- name: Deploy Logstash pipeline config
+  ansible.builtin.template:
+    src: "logstash.conf.j2"
+    dest: "{{ elk_compose_dir }}/logstash/pipeline/logstash.conf"
+    mode: '0644'
+  vars:
+    beats_port: 5044
+    es_host: "http://elasticsearch:9200"
+    es_user: "elastic"
+    es_password: "{{ elastic_password }}"
