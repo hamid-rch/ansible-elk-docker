@@ -27,7 +27,7 @@ This repository is designed to be:
 | --------- | ---------------------------- |
 | Ansible   | **2.19.5**                   |
 | Ubuntu    | **24.04**                    |
-| ELK Stack | **2.9.9**                    |
+| ELK Stack | **9.2.2**                    |
 | Docker    | Latest (Engine + Compose v2) |
 
 > ⚠️ Versions are tested and known to work together. Using other versions may require adjustments.
