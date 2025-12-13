@@ -1,16 +1,4 @@
 # ===== Elasticsearch setup =====
-- name: Ensure compose directory exists
-  ansible.builtin.file:
-    path: "{{ elk_compose_dir }}"
-    state: directory
-    mode: '0755'
-
-- name: Copy docker-compose.yml
-  ansible.builtin.copy:
-    src: docker-compose.yml
-    dest: "{{ compose_file }}"
-    mode: '0644'
-
 - name: Start Elasticsearch container
   ansible.builtin.command: docker compose up -d elasticsearch
   args:
@@ -18,7 +6,7 @@
 
 - name: Wait for Elasticsearch HTTP to respond 200 or 401
   ansible.builtin.uri:
-    url: "http://localhost:9200"
+    url: "{{es_url}}"
     method: GET
     status_code: [200, 401]
   register: es_status
