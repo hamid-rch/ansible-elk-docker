@@ -1,5 +1,7 @@
 - name: Deploy ELK stack with service token for Kibana
   hosts: end
   become: true
+  vars_files:
+    - roles/elk/vars/vault.yml
   roles:
     - elk

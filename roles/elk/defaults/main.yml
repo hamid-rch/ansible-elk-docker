@@ -18,7 +18,7 @@ es_container_name: elasticsearch
 kibana_container_name: kibana
 
 # Credentials
-elastic_password: "changeme"
+elastic_password: ""
 
 # URLs
 es_url: "http://localhost:9200"
