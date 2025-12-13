@@ -1,6 +1,0 @@
-elk_compose_dir: /home/elk-stack
-token_name: kibana-token
-es_container_name: elasticsearch
-kibana_container_name: kibana
-kibana_config_local_path: "{{ elk_compose_dir }}/kibana/config/kibana.yml"
-compose_file: "{{ elk_compose_dir }}/docker-compose.yml"

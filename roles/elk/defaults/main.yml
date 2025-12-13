@@ -1,7 +1,29 @@
+# ELK versions
+elk_version: "9.2.2"
+elastic_agent_version: "8.16.0"
+
+# Docker images
+elasticsearch_image: "docker.elastic.co/elasticsearch/elasticsearch:{{ elk_version }}"
+logstash_image: "docker.elastic.co/logstash/logstash:{{ elk_version }}"
+kibana_image: "docker.elastic.co/kibana/kibana:{{ elk_version }}"
+elastic_agent_image: "docker.elastic.co/beats/elastic-agent:{{ elastic_agent_version }}"
+
+# Paths
 elk_compose_dir: /home/elk-stack
-token_name: kibana-token
+compose_file: "{{ elk_compose_dir }}/docker-compose.yml"
+kibana_config_local_path: "{{ elk_compose_dir }}/kibana/config/kibana.yml"
+
+# Container names
 es_container_name: elasticsearch
 kibana_container_name: kibana
-kibana_config_local_path: "{{ elk_compose_dir }}/kibana/config/kibana.yml"
-compose_file: "{{ elk_compose_dir }}/docker-compose.yml"
-elastic_password: changeme
+
+# Credentials
+elastic_password: "changeme"
+
+# URLs
+es_url: "http://localhost:9200"
+es_in_kibana_url: "http://elasticsearch:9200"
+
+# # Token (dynamic)
+token_name: kibana-token
+kibana_token: ""

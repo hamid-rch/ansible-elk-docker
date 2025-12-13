@@ -1,0 +1,23 @@
+- name: restart elasticsearch
+  listen: restart elasticsearch
+  command: docker compose restart elasticsearch
+  args:
+    chdir: "{{ elk_compose_dir }}"
+
+- name: restart logstash
+  listen: restart logstash
+  command: docker compose restart logstash
+  args:
+    chdir: "{{ elk_compose_dir }}"
+
+- name: restart kibana
+  listen: restart kibana
+  command: docker compose restart kibana
+  args:
+    chdir: "{{ elk_compose_dir }}"
+
+- name: restart elastic-agent
+  listen: restart elastic-agent
+  command: docker compose restart elastic-agent
+  args:
+    chdir: "{{ elk_compose_dir }}"

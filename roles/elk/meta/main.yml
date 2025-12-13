@@ -1,0 +1,12 @@
+---
+galaxy_info:
+  author: "hamid chehregosha"
+  description: "Ansible role to deploy ELK stack (9.2.2) and Elastic Agent (8.16.0) using Docker Compose on Ubuntu 24.04"
+  company: "Your Organization"
+  license: "MIT"
+  min_ansible_version: 2.19
+  platforms:
+    - name: Ubuntu
+      versions:
+        - "24.04"
+dependencies: []
