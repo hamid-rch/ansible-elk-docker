@@ -1,15 +1,14 @@
-# ELK Ansible Deployment (Full Project)
+# ansible-elk
 
-این پروژه یک دیپلوی کامل ELK Stack روی سروری که حتی هیچ فایل قبلی ندارد ارائه می‌دهد.
+Ansible role to deploy the ELK stack (Elasticsearch 9.2.2, Logstash 9.2.2, Kibana 9.2.2) and Elastic Agent (8.16.0) using Docker Compose on Ubuntu 24.04.
 
-## ساختار پروژه
-ساختار کامل استاندارد رول Ansible پیاده‌سازی شده است.
+## Prerequisites
 
-## اجرای پروژه
+- Ubuntu 24.04
+- Docker & Docker Compose installed
+- Ansible 2.19.4
+
+## RUN
 ```
 ansible-playbook -i inventory/hosts playbooks/site.yml
 ```
-
-## نکات:
-- همه فایل‌ها (docker-compose + config) به صورت خودکار ساخته و کپی می‌شوند
-- نیاز به وجود هیچ پوشه یا فایل قبلی روی سرور نیست
