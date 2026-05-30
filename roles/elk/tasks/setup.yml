@@ -1,21 +1,12 @@
-- name: Ensure compose directory exists
+- name: Ensure required directories exist
   file:
-    path: "{{ elk_compose_dir }}"
+    path: "{{ item }}"
     state: directory
     mode: '0755'
-
-- name: Ensure kibana config directory exists
-  file:
-    path: "{{ elk_compose_dir }}/kibana/config"
-    state: directory
-    mode: '0755'
-    recurse: yes
-
-- name: Ensure logstash pipeline directory exists
-  file:
-    path: "{{ elk_compose_dir }}/logstash/pipeline"
-    state: directory
-    mode: '0755'
+  loop:
+    - "{{ elk_compose_dir }}"
+    - "{{ elk_compose_dir }}/kibana/config"
+    - "{{ elk_compose_dir }}/logstash/pipeline"
 
 - name: Deploy docker-compose.yml
   template:
