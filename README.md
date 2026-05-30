@@ -25,9 +25,9 @@ This repository is designed to be:
 
 | Component | Version                      |
 | --------- | ---------------------------- |
-| Ansible   | **2.19.5**                   |
+| Ansible   | **2.20.6**                   |
 | Ubuntu    | **24.04**                    |
-| ELK Stack | **9.2.2**                    |
+| ELK Stack | **9.4.2**                    |
 | Docker    | Latest (Engine + Compose v2) |
 
 > ⚠️ Versions are tested and known to work together. Using other versions may require adjustments.
@@ -49,7 +49,7 @@ This repository is designed to be:
 │       ├── tasks/
 │       ├── templates/
 │       └── vars/
-│           └── vault.yml   # encrypted
+│           └── main.yml   # encrypted
 └── README.md
 ```
 
@@ -62,7 +62,7 @@ Make sure the target system has:
 * Ubuntu 24.04
 * Docker installed and running
 * Docker Compose v2
-* Ansible 2.19.5 installed on the control node
+* Ansible 2.20.6 installed on the control node
 * SSH access to the target host
 
 ---
@@ -183,16 +183,6 @@ Example:
 ```bash
 curl http://localhost:9200
 ```
-
----
-
-## 🛠️ Customization
-
-You can customize the deployment by overriding variables:
-
-* Via `defaults/main.yml` (non-sensitive values only)
-* Via Vault (`vault.yml`) for secrets
-* Via extra-vars if needed
 
 ---
 
