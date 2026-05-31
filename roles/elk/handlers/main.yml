@@ -1,23 +1,32 @@
+---
 - name: restart elasticsearch
   listen: restart elasticsearch
-  command: docker compose restart elasticsearch
-  args:
-    chdir: "{{ elk_compose_dir }}"
+  community.docker.docker_compose_v2:
+    project_src: "{{ elk_compose_dir }}"
+    services:
+      - elasticsearch
+    state: restarted
 
 - name: restart logstash
   listen: restart logstash
-  command: docker compose restart logstash
-  args:
-    chdir: "{{ elk_compose_dir }}"
+  community.docker.docker_compose_v2:
+    project_src: "{{ elk_compose_dir }}"
+    services:
+      - logstash
+    state: restarted
 
 - name: restart kibana
   listen: restart kibana
-  command: docker compose restart kibana
-  args:
-    chdir: "{{ elk_compose_dir }}"
+  community.docker.docker_compose_v2:
+    project_src: "{{ elk_compose_dir }}"
+    services:
+      - kibana
+    state: restarted
 
 - name: restart elastic-agent
   listen: restart elastic-agent
-  command: docker compose restart elastic-agent
-  args:
-    chdir: "{{ elk_compose_dir }}"
+  community.docker.docker_compose_v2:
+    project_src: "{{ elk_compose_dir }}"
+    services:
+      - elastic-agent
+    state: restarted
