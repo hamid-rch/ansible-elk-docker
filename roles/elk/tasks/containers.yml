@@ -1,8 +1,12 @@
 # ===== Start remaining containers =====
-- name: Start Kibana, Logstash and Elastic Agent
-  ansible.builtin.command: docker compose up -d kibana logstash elastic-agent
-  args:
-    chdir: "{{ elk_compose_dir }}"
+- name: Ensure Kibana, Logstash and Elastic Agent are running
+  community.docker.docker_compose_v2:
+    project_src: "{{ elk_compose_dir }}"
+    services:
+      - kibana
+      - logstash
+      - elastic-agent
+    state: present
 
 - name: Wait for Kibana to respond 200 or 401
   ansible.builtin.uri:
