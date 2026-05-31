@@ -30,3 +30,9 @@
     services:
       - elastic-agent
     state: restarted
+
+- name: remove kibana token cache
+  listen: remove kibana token cache
+  ansible.builtin.file:
+    path: "{{ kibana_token_file }}"
+    state: absent
