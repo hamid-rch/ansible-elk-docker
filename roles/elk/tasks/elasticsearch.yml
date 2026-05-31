@@ -15,8 +15,8 @@
   until: es_status.status in [200, 401]
 
 - name: Generate dynamic token name
-  set_fact:
-    token_name: "kibana-token-{{ ansible_date_time.iso8601_basic_short }}"
+  ansible.builtin.set_fact:
+    token_name: "kibana-token-{{ ansible_facts.date_time.iso8601_basic_short }}"
 
 - name: Create service token inside Elasticsearch container
   ansible.builtin.command: >
