@@ -27,3 +27,4 @@ es_in_kibana_url: "http://elasticsearch:9200"
 # # Token (dynamic)
 token_name: kibana-token
 kibana_token: ""
+kibana_token_file: "{{ elk_compose_dir }}/.secrets/kibana.token"
